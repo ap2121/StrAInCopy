@@ -13,12 +13,17 @@ const openAi = new OpenAI({
 const newDesc = async (req, res) => {
     try {
         const {strainName, cross1, cross2} = req.body
-        const aiDescRes = await openAi.completions.create({
-            messages: [{role: "system", content: `write a short sentance using these three words, ${strainName}, ${cross1}, ${cross2}`}],
-            model:"gpt-3.5-turbo"
+        const aiDescRes = await openAi.chat.completions.create({
+           model: "gpt-3.5-turbo",
+           
+           messages: [{"role": "user", "content": `Write a concise cannabis strain description for a strain called ${strainName} which is a cross between the strain ${cross1} and the strain ${cross2}`}],
+           max_tokens: 400
+           
     })
     res.send({
-        response: aiDescRes
+        strainName: strainName,
+        response: aiDescRes,
+        ...req.body
     })
 
     } catch(error) {
