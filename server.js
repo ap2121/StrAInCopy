@@ -1,7 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const logger = require('morgan')
-
+const db = require('./db')
 const app = express()
 const AppRouter = require('./routes/AppRouter')
 
